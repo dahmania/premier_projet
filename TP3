@@ -1,0 +1,232 @@
+
+# Crée par Stéphane Teodoru et Ahmed Rayane 2023
+# TP3
+
+# Importation
+
+import random
+import sys
+
+# Fonctions:
+force_chef = 0
+Nbrvies_chef = 0
+niveaux_xp = 20
+numeros_combats = 0
+nombre_victoires = 0
+nombre_defaites = 0
+nombre_victoires_affilé = 0
+puissances_adversaires = 0
+reponse_combat = "Victoire"
+
+# Introduction
+print(
+   "Aziz de la fontaine un jeune aventurier intelligent et sans peur, se perd dans un hôtel abandonné il doit vaincre tous les monstres de l’hôtel pour espérer pouvoir sortir sain et sauf de ce long couloir.")
+print("Vous êtes arrivés au premier adversaire un monstre pas très fort:")
+
+
+# fonction pour les règles du jeu
+def regles_du_jeu():
+   print("Pour gagner le combat,  la valeur du dé lancé doit être  supérieure à la puissance de l’adversaire."
+         "Dans ce cas,le niveau de vie de l’usager est augmenté de la force de l’adversaire."
+         "\nUne défaite a lieu lorsque la valeur du dé lancé par l’usager est inférieure ou égale à la puissance de l’adversaire." ""
+         " Dans ce cas, le niveau de vie de l’usager est diminué de la force de l’adversaire. \nLe combat se termine lorsque les points de vie de l’usager tombent en dessous de  0 soit en négatif. "
+         "\nL’usager peut combattre ou éviter chaque adversaire, si le joueur décide d’éviter l’adversaire, il y a une pénalité de 1 point de vie a lieu.")
+
+
+# Fonction définit le menu
+
+def menu():
+   print("Que voulez-vous faire ?\n"
+         "1- Combattre ce monstre diabolique  \n"
+         "2- Éviter cet adversaire et ouvrir une autre porte \n"
+         "3- Afficher les règles de la partie \n"
+         "4- Quitter le jeu\n");
+
+
+# Commencement de la fonction principale, jeu
+def jeu():
+   global niveaux_vie
+   global numeros_combats
+   global nombres_victoires
+   global nombre_defaites
+   global nombre_victoires_affilé
+   global xp_chef
+   global puissance_boss
+   while niveau_vie > 0:
+
+       # Partie avec difficulté normale
+
+       # Détécte si vous avez assez de victoires pour affronter le boss en difficulté normale
+
+       if nombre_victoires_consecutives == 3:
+           print("\n\nVous êtes arrivez devant un chef")
+           print(
+               "Maintenant, vous allez les deux roulez des dès, et la personne qui a le plus grand montant peu attaquer l'autre avec ce montant. Le chef a le même nombre de vie que toi: ",
+               niveau_vie)
+           print("Vous gangez deux dès 3!!!")
+           vies_chef = niveau_vie
+           while vies_chef > 0:
+               puissance_chef = random.randint(1, 10)
+               print("Le chef attaque avec une puissance de ", force_chef)
+               choix_attaque = int(input(
+                   "Vous voulez attaquer, 1, ou ésquiver, ce qui vous fait la moitié des dommages de son attaque, 2?"))
+               if choix_attaque == 1:
+                   lancer_des10 = random.randint(1, 10)
+                   if lancer_des10 > chef_chef:
+                       print("Bravo, vous faites ", lancer_des10, "dommages au boss!")
+                       vies_chef -= 10
+                       print("\nVous avez ", niveau_vie, "vies et le chef a ", vies_chef, "vies.")
+                   else:
+                       print("OH non, vous perdez ", force_chef, "dommages!")
+                       niveau_vie -= force_chef
+                       print("\nVous avez ", niveau_vie, "vies et le chef a ", vies_chef, "vies.")
+                       if niveau_vie <= 0:
+                           print("GAME OVER")
+                           sys.exit()
+               else:
+                   moitier_dommages = puissance_chef / 2
+                   print("Vous perdez ", moitier_dommages, "dommages!")
+                   niveau_vie -= moitier_dommages
+                   print("\nVous avez ", niveau_vie, "vies et le chef a ", vies_chef, "vies.")
+                   if niveau_vie <= 0:
+                       print("JEU FINIT")
+                       sys.exit()
+           # Chef finit, le mode de jeu avec la difficulté normal recommence
+           print("Bravo! Vous avez battus le Chef!\nVous retournez dans le corridor de l’hôtel abandonné.")
+
+       # Le mode de jeu normal avec les opposant normals dans les corridors
+       force_adversaire = random.randint(1, 10)
+       print("\nLa force de l'adversaire est de", force_adversaire, "\n""")
+       choix = int(input(menu()))
+       if choix == 1:
+           lancer_des = random.randint(1, 5)
+           lancer_des2 = random.randint(1, 5)
+           total_des = lancer_des + lancer_des2
+           print("Vous avez roulez:", total_des)
+           if total_des > force_adversaire:
+               print("felicitation ! Vous arrivez à gagner le combat, vous gagnez ", force_adversaire, " vie")
+               niveau_vie += force_adversaire
+               numero_combat += 1
+               nombre_victoires += 1
+               nombre_victoires_consecutives += 1
+               print("combat numéro= ", numero_combat, "\nvie= ", niveau_vie, "\nnombres de défaites =",
+                     nombre_defaites, "\nle nombre de victoires =", nombre_victoires,
+                     "\n et le nombre de victoires consécutifs: ", nombre_victoires_consecutives)
+               jeu()
+               if nombre_victoires_consecutives > 3:
+                   print("\n\nVous vous situez devant un chef")
+           else:
+               print("\nVous avez malheureusement perdu le combat et vous perdez", force_adversaire, " vies")
+               nombre_victoires_consecutives = 0
+               niveau_vie -= force_adversaire
+               numero_combat += 1
+               nombre_defaites += 1
+               print("combat numéro= ", numero_combat, "\nvie= ", niveau_vie, "\nnombres de défaites =",
+                     nombre_defaites, "\nle nombre de victoires =", nombre_victoires,
+                     "\n et le nombre de victoires consécutifs: ", nombre_victoires_consecutives)
+               jeu()
+
+
+       elif choix == 2:
+           print("Vous perdez 1 vie et passer au prochain adversaire.")
+           niveau_vie = niveau_vie - 1
+           print(niveau_vie)
+       elif choix == 3:
+           print(regles_du_jeu())
+       elif choix == 13:
+           niveau_vie += 10
+           print("Vous avez ", niveau_vie, "vies et la force de l'adversaire est de maximum 4 ;)")
+
+
+       else:
+           print("au revoir")
+           sys.exit()
+
+       # Mode de jeu facile, mais la difficulté du chef n'est pas aussi simple
+
+       # verifie si vous avez assez de victoires pour affronter le chef qui possède plus de vies
+
+       if nombre_victoires_consecutives == 4:
+           print("\n\nVous êtes devant le chef")
+           print(
+               "Maintenant, vous allez les deux roulez des dès, et la personne qui a le plus grand montant peu attaquer l'autre avec ce montant. Le chef a le même nombre de vie que toi: ",
+               niveau_vie)
+           print("Vous gangez un des 10!!!")
+           vies_chef = niveau_vie
+           while vies_chef > 0:
+               force_chef = random.randint(1, 10)
+               print("Le chef attaque avec une puissance de ", force_chef)
+               choix_attaque = int(input(
+                   "Vous voulez attaquer, 1, ou ésquiver, ce qui vous fait la moitié des dommages de son attaque, 2?"))
+               if choix_attaque == 1:
+                   lancer_des10 = random.randint(1, 10)
+                   if lancer_des10 > force_chef:
+                       print("felicitation, vous faites ", lancer_des10, "dommages au chef!")
+                       vies_chef -= 10
+                       print("\nVous avez ", niveau_vie, "vies et le boss a ", vies_boss, "vies.")
+                   else:
+                       print(" vous perdez ", force_chef, "dommages!")
+                       niveau_vie -= force_chef
+                       print("\nVous avez ", niveau_vie, "vies et le chef a ", vies_boss, "vies.")
+                       if niveau_vie <= 0:
+                           print("JEU FINIT")
+                           sys.exit()
+               else:
+                   moitier_dommages = puissance_boss / 2
+                   print("Vous perdez ", moitier_dommages, "dommages!")
+                   niveau_vie -= moitier_dommages
+                   print("\nVous avez ", niveau_vie, "vies et le chef a ", vies_chef, "vies.")
+                   if niveau_vie <= 0:
+                       print("GAME OVER")
+                       sys.exit()
+           # chef battus, retours dans l’hôtel abandonné
+
+           print(
+               "felicitation! Vous avez réussi à battre le chef!\nVous retournez dans l’hôtel abandonné et coutinuait votre aventure.")
+
+       # Jeu facile avec difficulté facile
+
+       force_adversaire = 3
+       print("\nle niveau de force de l’adversaire est de", force_adversaire, "\n")
+       choix = int(input(menu()))
+       if choix == 1:
+           lancer_des = random.randint(1, 5)
+           lancer_des2 = random.randint(1, 5)
+           total_des = lancer_des + lancer_des2
+           print("Vous avez roulez:", total_des)
+           if total_des > force_adversaire:
+               print("felicitations! Vous avez gagné le combat et vous gagnez ", force_adversaire, " vie!")
+               niveau_vie += force_adversaire
+               numero_combat += 1
+               nombre_victoires += 1
+               nombre_victoires_consecutives += 1
+               print("combat numéro= ", numero_combat, "\nvie= ", niveau_vie, "\nnombres de défaites =",
+                     nombre_defaites, "\nle nombre de victoires =", nombre_victoires,
+                     "\n et le nombre de victoires consécutifs: ", nombre_victoires_consecutives)
+               jeu()
+
+           else:
+               print("\nLe combat est perdu et vous perdez", force_adversaire, " vies")
+               nombre_victoires_consecutives = 0
+               niveau_vie -= force_adversaire
+               numero_combat += 1
+               nombre_defaites += 1
+               print("combat numéro= ", numero_combat, "\nvie= ", niveau_vie, "\nnombres de défaites =",
+                     nombre_defaites, "\nle nombre de victoires =", nombre_victoires,
+                     "\n et le nombre de victoires consécutifs: ", nombre_victoires_consecutives)
+
+       elif choix == 2:
+           print("Vous perdez une vie mais vous arriver à passer au prochain adversaire.")
+           niveau_vie = niveau_vie - 1
+           print(niveau_vie)
+       elif choix == 3:
+           print(regles_du_jeu())
+       else:
+           print("au revoir")
+           sys.exit()
+
+
+# On active la fonction jeu qui constitue tout le programme
+
+       jeu()
+
